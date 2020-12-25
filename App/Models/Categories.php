@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Types\Partial;
+use App\Utils;
 use PDO;
 use App\Types\Category;
+
 
 
 class Categories extends \Core\Model{
@@ -12,19 +14,7 @@ class Categories extends \Core\Model{
         $db = static::getDB();
         $dataQuery = "SELECT * FROM `category`";
         $countQuery = "SELECT COUNT(*) FROM `category`";
-        if ($partial->isOrdered()){
-            $dataQuery .= " order by {$partial->column} {$partial->direction}";
-        }
-        if ($partial->isPaging()){
-            $offset = $partial->page * $partial->size;
-            $dataQuery .= " limit {$partial->size} offset {$offset}";
-        }
-
-        return [
-            'list'=>$db->query($dataQuery)->fetchAll(PDO::FETCH_ASSOC),
-            'total'=>(int)$db->query($countQuery)->fetch()[0]
-
-        ];
+        return Utils::getPartial($db,$dataQuery,$countQuery,$partial);
     }
 
     public static function add(Category $category) {

@@ -28,10 +28,11 @@ class Categories  extends \Core\Controller
     public function addAction() {
         $category = new Category($_POST);
         if ($category->validate()){
-            View::render(Models\Categories::add($category));
+            View::render(['done' =>Models\Categories::add($category)]);
         }
         else {
-            View::render(['error'=>'Введены неверные данные!']);
+            View::render(['error'=>'Введены неверные данные!','done'=>false, 'category'=>$category]);
+
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Types\Partial;
+use App\Utils;
 use PDO;
 use App\Types\Manufactur;
 
@@ -12,19 +13,7 @@ class Manufacturer extends \Core\Model {
         $db = static::getDB();
         $dataQuery = "SELECT * FROM `manufacturer`";
         $countQuery = "SELECT COUNT(*) FROM `manufacturer`";
-        if ($partial->isOrdered()){
-            $dataQuery .= " order by {$partial->column} {$partial->direction}";
-        }
-        if ($partial->isPaging()){
-            $offset = $partial->page * $partial->size;
-            $dataQuery .= " limit {$partial->size} offset {$offset}";
-        }
-
-        return [
-            'list'=>$db->query($dataQuery)->fetchAll(PDO::FETCH_ASSOC),
-            'total'=>(int)$db->query($countQuery)->fetch()[0]
-
-        ];
+        return Utils::getPartial($db,$dataQuery,$countQuery,$partial);
     }
 
     public static function add(Manufactur $manufactur) {

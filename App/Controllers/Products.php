@@ -2,17 +2,17 @@
 
 namespace App\Controllers;
 
-use App\Types\Item;
+use App\Types\Partial;
+use App\Types\Product;
 use \Core\View;
 use \App\Models;
-use App\Types\Partial;
 
 /**
  * Home controller
  *
  * PHP version 7.0
  */
-class Items extends \Core\Controller
+class Products extends \Core\Controller
 {
 
     /**
@@ -22,13 +22,13 @@ class Items extends \Core\Controller
      */
     public function indexAction()
     {
-        View::render(Models\Items::getAll(new Partial($_GET)));
+        View::render(Models\Products::getAll(new Partial($_GET)));
     }
 
     public function addAction() {
-        $item = new Item($_POST);
-        if ($item->validate()){
-            View::render(Models\Items::add($item));
+        $product = new Product($_POST);
+        if ($product->validate()){
+            View::render(Models\Products::add($product));
         }
         else {
             View::render(['error'=>'Введены неверные данные!']);
