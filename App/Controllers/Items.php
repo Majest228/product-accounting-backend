@@ -28,10 +28,22 @@ class Items extends \Core\Controller
     public function addAction() {
         $item = new Item($_POST);
         if ($item->validate()){
-            View::render(Models\Items::add($item));
+
+            View::render(['done' =>Models\Items::add($item)]);
         }
         else {
-            View::render(['error'=>'Введены неверные данные!']);
+            View::render(['error'=>'Введены неверные данные!','done'=>false]);
         }
     }
+    public function editAction() {
+        $item = new Item($_POST);
+        if ($item->validate()){
+            View::render(['done' =>Models\Items::edit($item)]);
+        }
+        else {
+            View::render(['error'=>'Введены неверные данные!','done'=>false]);
+
+        }
+    }
+
 }

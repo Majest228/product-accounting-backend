@@ -31,7 +31,7 @@ class Categories  extends \Core\Controller
             View::render(['done' =>Models\Categories::add($category)]);
         }
         else {
-            View::render(['error'=>'Введены неверные данные!','done'=>false, 'category'=>$category]);
+            View::render(['error'=>'Введены неверные данные!','done'=>false]);
 
         }
     }
@@ -41,7 +41,7 @@ class Categories  extends \Core\Controller
             View::render(['done' =>Models\Categories::edit($category)]);
         }
         else {
-            View::render(['error'=>'Введены неверные данные!','done'=>false, 'category'=>$category]);
+            View::render(['error'=>'Введены неверные данные!','done'=>false]);
 
         }
     }

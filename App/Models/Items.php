@@ -11,8 +11,8 @@ use App\Types\Item;
 class Items extends \Core\Model{
     public static function getAll(Partial $partial) {
         $db = static::getDB();
-        $dataQuery = "SELECT item.id, product.name as name,item.price FROM item
-                                    INNER JOIN product ON item.product_id = product.id";
+        $dataQuery = "SELECT item.id,item.product_id, product.name as name,item.price FROM item
+                                    LEFT JOIN product ON item.product_id = product.id";
         $countQuery = "SELECT COUNT(*) FROM `item`
 ";
         return Utils::getPartial($db,$dataQuery,$countQuery,$partial);
@@ -25,6 +25,20 @@ class Items extends \Core\Model{
             INSERT INTO item (product_id,price)
             VALUES (:product_id,:price)
         ");
+        $statement->bindParam(":product_id", $item->product_id);
+        $statement->bindParam(":price", $item->price);
+
+        return $statement->execute();
+    }
+    public static function edit(Item $item) {
+        $db = static::getDB();
+
+        $statement = $db->prepare("
+            UPDATE item 
+            SET product_id = :product_id,price = :price
+            Where id = :id
+        ");
+        $statement->bindParam(":id", $item->id);
         $statement->bindParam(":product_id", $item->product_id);
         $statement->bindParam(":price", $item->price);
 
