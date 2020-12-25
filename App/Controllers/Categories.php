@@ -35,4 +35,14 @@ class Categories  extends \Core\Controller
 
         }
     }
+    public function editAction() {
+        $category = new Category($_POST);
+        if ($category->validate()){
+            View::render(['done' =>Models\Categories::edit($category)]);
+        }
+        else {
+            View::render(['error'=>'Введены неверные данные!','done'=>false, 'category'=>$category]);
+
+        }
+    }
 }

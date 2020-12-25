@@ -28,4 +28,17 @@ class Categories extends \Core\Model{
 
         return $statement->execute();
     }
+    public static function edit(Category $category) {
+        $db = static::getDB();
+
+        $statement = $db->prepare("
+            UPDATE category 
+            SET name = :name 
+            Where id = :id
+        ");
+        $statement->bindParam(":id", $category->id);
+        $statement->bindParam(":name", $category->name);
+
+        return $statement->execute();
+    }
 }
