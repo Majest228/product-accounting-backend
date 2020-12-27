@@ -28,10 +28,28 @@ class Manufacturer  extends \Core\Controller
     public function addAction() {
         $manufactur = new Manufactur($_POST);
         if ($manufactur->validate()){
-            View::render(Models\Manufacturer::add($manufactur));
+            View::render(['done' =>Models\Manufacturer::add($manufactur)]);
         }
         else {
             View::render(['error'=>'Введены неверные данные!']);
+        }
+    }
+    public function editAction() {
+        $manufactur = new Manufactur($_POST);
+        if ($manufactur->validate()){
+            View::render(['done' =>Models\Manufacturer::edit($manufactur)]);
+        }
+        else {
+            View::render(['error'=>'Введены неверные данные!','done'=>false]);
+
+        }
+    }
+    public function deleteAction()
+    {
+        if (isset($_GET['id'])) {
+            View::render(['done' => Models\Manufacturer::delete($_GET['id'])]);
+        } else {
+            View::render(['error' => 'Введены неверные данные!', 'done' => false]);
         }
     }
 

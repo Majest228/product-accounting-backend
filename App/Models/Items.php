@@ -44,4 +44,15 @@ class Items extends \Core\Model{
 
         return $statement->execute();
     }
+    public static function delete($id) {
+        $db = static::getDB();
+
+        $statement = $db->prepare("
+            Delete from item 
+            Where id = :id
+        ");
+        $statement->bindParam(":id", $id);
+
+        return $statement->execute();
+    }
 }

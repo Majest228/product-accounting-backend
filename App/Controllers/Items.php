@@ -45,5 +45,13 @@ class Items extends \Core\Controller
 
         }
     }
+    public function deleteAction()
+    {
+        if (isset($_GET['id'])) {
+            View::render(['done' => Models\Items::delete($_GET['id'])]);
+        } else {
+            View::render(['error' => 'Введены неверные данные!', 'done' => false]);
+        }
+    }
 
 }
